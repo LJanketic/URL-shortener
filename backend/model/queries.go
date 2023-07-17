@@ -1,17 +1,17 @@
 package model
 
-func getAllMinfyers() ([]Minifyr, error) {
-	var minifyers []Minifyr
+func GetAllMinfyrs() ([]Minifyr, error) {
+	var minifyrs []Minifyr
 
-	tx := db.Find(&minifyers)
+	tx := db.Find(&minifyrs)
 	if tx.Error != nil {
 		return []Minifyr{}, tx.Error
 	}
 
-	return minifyers, nil
+	return minifyrs, nil
 }
 
-func getMinifyr(id uint64) (Minifyr, error){
+func GetMinifyr(id uint64) (Minifyr, error){
 	var minifyr Minifyr
 
 	tx := db.Where("id = ?", id).First(&minifyr)
@@ -22,25 +22,25 @@ func getMinifyr(id uint64) (Minifyr, error){
 	return minifyr, nil
 }
 
-func createMinifyr(minifyr Minifyr) error {
+func CreateMinifyr(minifyr Minifyr) error {
 	tx := db.Create(&minifyr)
 
 	return tx.Error
 }
 
-func updateMinifyr(minifyr Minifyr) error {
+func UpdateMinifyr(minifyr Minifyr) error {
 	tx := db.Save(&minifyr)
 
 	return tx.Error
 }
 
-func deleteMinifyr(id uint64) error {
+func DeleteMinifyr(id uint64) error {
 	tx := db.Unscoped().Delete(&Minifyr{}, id)
 
 	return tx.Error
 }
 
-func findByMinifyrURL(url string) (Minifyr, error) {
+func FindByMinifyrURL(url string) (Minifyr, error) {
 	var minifyr Minifyr
 
 	tx := db.Where("minifyr = ?", url).First(&minifyr)
