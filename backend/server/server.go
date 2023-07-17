@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-func getAllRedirects(ctx *fiber.Ctx) error {
+func getAllMinifyrs(ctx *fiber.Ctx) error {
 
 	minifyrs, err := model.GetAllMinfyrs()
 	if err != nil {
@@ -28,6 +28,6 @@ func SetupServerListener() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	router.Get("/getMinifyr", getAllRedirects)
+	router.Get("/getMinifyr", getAllMinifyrs)
 	router.Listen(":3000")
 }
