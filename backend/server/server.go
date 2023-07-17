@@ -28,6 +28,6 @@ func SetupServerListener() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	router.Get("/getAllMinifyrs", getAllRedirects)
+	router.Get("/getMinifyr", getAllRedirects)
 	router.Listen(":3000")
 }
