@@ -39,3 +39,11 @@ func deleteMinifyr(id uint64) error {
 
 	return tx.Error
 }
+
+func findByMinifyrURL(url string) (Minifyr, error) {
+	var minifyr Minifyr
+
+	tx := db.Where("minifyr = ?", url).First(&minifyr)
+
+	return minifyr, tx.Error
+}
