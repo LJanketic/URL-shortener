@@ -19,7 +19,7 @@ func getAllRedirects(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(minifyrs)
 }
 
-func setupServerListener() {
+func SetupServerListener() {
 
 	router := fiber.New()
 
@@ -27,4 +27,7 @@ func setupServerListener() {
 		AllowOrigins: "*",
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
+
+	router.Get("/getAllMinifyrs", getAllRedirects)
+	router.Listen(":3000")
 }
