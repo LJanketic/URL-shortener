@@ -6,6 +6,7 @@ import (
 
 var runesList = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
 
+// TODO: Alter random with a seed using time.Now()
 func RandomizeURL(size int) string {
 	randStr := make([]rune, size)
 
