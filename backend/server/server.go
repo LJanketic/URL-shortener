@@ -15,7 +15,7 @@ func getAllMinifyrs(c *fiber.Ctx) error {
 	minifyrs, err := model.GetAllMinfyrs()
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Fetching All Minifyrs from database failed " + err.Error(),
+			"message": utils.ERR_GET_ALL + err.Error(),
 		})
 	}
 
@@ -27,14 +27,14 @@ func getMinifyr(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 64)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Error parsing JSON " + err.Error(),
+			"message": utils.ERR_PARSE_JSON + err.Error(),
 		})
 	}
 
 	minifyr, err := model.GetMinifyr(id)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Fetching Minifyr from database failed " + err.Error(),
+			"message": utils.ERR_GET_ONE + err.Error(),
 		})
 	}
 
@@ -49,7 +49,7 @@ func createMinifyr(c *fiber.Ctx) error {
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Error parsing JSON " + err.Error(),
+			"message": utils.ERR_PARSE_JSON + err.Error(),
 		})
 	}
 
@@ -60,7 +60,7 @@ func createMinifyr(c *fiber.Ctx) error {
 	err = model.CreateMinifyr(minifyr)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Creating Minifyr in database failed " + err.Error(),
+			"message": utils.ERR_CREATE_ONE + err.Error(),
 		})
 	}
 
@@ -75,14 +75,14 @@ func updateMinifyr(c *fiber.Ctx) error {
 	err := c.BodyParser(&minifyr)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Error parsing JSON " + err.Error(),
+			"message": utils.ERR_PARSE_JSON + err.Error(),
 		})
 	}
 
 	err = model.UpdateMinifyr(minifyr)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Updating Minifyr in database failed " + err.Error(),
+			"message": utils.ERR_UPDATE_ONE + err.Error(),
 		})
 	}
 
@@ -94,19 +94,19 @@ func deleteMinifyr(c *fiber.Ctx) error {
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Error parsing JSON " + err.Error(),
+			"message": utils.ERR_PARSE_JSON + err.Error(),
 		})
 	}
 
 	err = model.DeleteMinifyr(id)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Deleting Minifyr in database failed " + err.Error(),
+			"message": utils.ERR_DELETE_ONE + err.Error(),
 		})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map {
-		"message": "Minifyr deleted",
+		"message": utils.SCS_DELETE_ONE,
 	})
 }
 
@@ -115,13 +115,13 @@ func redirectViaMinifyr(c *fiber.Ctx) error {
 
 	minifyr, err := model.FindByMinifyrURL(minifyrUrl)
 	if err != nil {
-		fmt.Printf("Fetching Minifyr from database failed!")
+		fmt.Printf(utils.ERR_GET_ONE)
 	}
 
 	minifyr.Clicked += 1
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Incrementing 'Clicked' property failed " + err.Error(),
+			"message": utils.CLKD_ERR + err.Error(),
 		})
 	}
 
