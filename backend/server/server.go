@@ -3,6 +3,7 @@ package server
 import (
 	"Minifyr/model"
 	"Minifyr/utils"
+	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -114,8 +115,13 @@ func redirectViaMinifyr(c *fiber.Ctx) error {
 
 	minifyr, err := model.FindByMinifyrURL(minifyrUrl)
 	if err != nil {
+		fmt.Printf("Fetching Minifyr from database failed!")
+	}
+
+	minifyr.Clicked += 1
+	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Fetching Minifyr from database failed " + err.Error(),
+			"message": "Incrementing 'Clicked' property failed " + err.Error(),
 		})
 	}
 
