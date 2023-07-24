@@ -14,7 +14,7 @@ func getAllMinifyrs(c *fiber.Ctx) error {
 	minifyrs, err := model.GetAllMinfyrs()
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Error getting all minifyr links " + err.Error(),
+			"message": "Fetching All Minifyrs from database failed " + err.Error(),
 		})
 	}
 
@@ -26,14 +26,14 @@ func getMinifyr(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 64)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Error could not parse id: " + err.Error(),
+			"message": "Error parsing JSON " + err.Error(),
 		})
 	}
 
 	minifyr, err := model.GetMinifyr(id)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Error could not retrieve minfyr from db: " + err.Error(),
+			"message": "Fetching Minifyr from database failed " + err.Error(),
 		})
 	}
 
@@ -48,7 +48,7 @@ func createMinifyr(c *fiber.Ctx) error {
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "error parsing JSON " + err.Error(),
+			"message": "Error parsing JSON " + err.Error(),
 		})
 	}
 
@@ -59,7 +59,7 @@ func createMinifyr(c *fiber.Ctx) error {
 	err = model.CreateMinifyr(minifyr)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "could not create minifyr in the db " + err.Error(),
+			"message": "Creating Minifyr in database failed " + err.Error(),
 		})
 	}
 
@@ -74,14 +74,14 @@ func updateMinifyr(c *fiber.Ctx) error {
 	err := c.BodyParser(&minifyr)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "Parsing JSON failed " + err.Error(),
+			"message": "Error parsing JSON " + err.Error(),
 		})
 	}
 
 	err = model.UpdateMinifyr(minifyr)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
-			"message": "could not update minifyr in the db " + err.Error(),
+			"message": "Updating Minifyr in database failed " + err.Error(),
 		})
 	}
 
