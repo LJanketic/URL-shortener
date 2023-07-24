@@ -109,6 +109,19 @@ func deleteMinifyr(c *fiber.Ctx) error {
 	})
 }
 
+func redirectViaMinifyr(c *fiber.Ctx) error {
+	minifyrUrl := c.Params("redirect")
+
+	minifyr, err := model.FindByMinifyrURL(minifyrUrl)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			"message": "Fetching Minifyr from database failed " + err.Error(),
+		})
+	}
+
+	return c.Redirect(minifyr.Redirect, fiber.StatusTemporaryRedirect)
+}
+
 func SetupServerListener() {
 
 	router := fiber.New()
@@ -123,6 +136,8 @@ func SetupServerListener() {
 	router.Post("/minifyr", createMinifyr)
 	router.Patch("/minifyr", updateMinifyr)
 	router.Delete("/minifyr/:id", deleteMinifyr)
+
+	router.Get("/r/:redirect", redirectViaMinifyr)
 
 	router.Listen(":3000")
 }
