@@ -97,8 +97,8 @@ func SetupServerListener() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	router.Get("/getMinifyr", getAllMinifyrs)
-	router.Get("/getMinifyr/:id", getMinifyr)
+	router.Get("/minifyr", getAllMinifyrs)
+	router.Get("/minifyr/:id", getMinifyr)
 	router.Post("/minifyr", createMinifyr)
 	router.Patch("/minifyr", updateMinifyr)
 
