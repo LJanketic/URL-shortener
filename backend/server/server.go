@@ -2,6 +2,7 @@ package server
 
 import (
 	"Minifyr/model"
+	"Minifyr/utils"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -39,6 +40,54 @@ func getMinifyr(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(minifyr)
 }
 
+func createMinifyr(c *fiber.Ctx) error {
+	c.Accepts("application/json")
+
+	var minifyr model.Minifyr
+	err := c.BodyParser(&minifyr)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			"message": "error parsing JSON " + err.Error(),
+		})
+	}
+
+	if minifyr.Random {
+		minifyr.Minifyr = utils.RandomizeURL(8/*int(time.Now().Unix())*/)
+	}
+
+	err = model.CreateMinifyr(minifyr)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			"message": "could not create minifyr in the db " + err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(minifyr)
+}
+
+func updateMinifyr(c *fiber.Ctx) error {
+	c.Accepts("application.json")
+
+	var minifyr model.Minifyr
+
+	err := c.BodyParser(&minifyr)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			"message": "Parsing JSON failed " + err.Error(),
+		})
+	}
+
+	err = model.UpdateMinifyr(minifyr)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			"message": "could not update minifyr in the db " + err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(minifyr)
+}
+
 func SetupServerListener() {
 
 	router := fiber.New()
@@ -50,5 +99,8 @@ func SetupServerListener() {
 
 	router.Get("/getMinifyr", getAllMinifyrs)
 	router.Get("/getMinifyr/:id", getMinifyr)
+	router.Post("/minifyr", createMinifyr)
+	router.Patch("/minifyr", updateMinifyr)
+
 	router.Listen(":3000")
 }
