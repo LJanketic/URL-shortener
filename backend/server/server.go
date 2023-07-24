@@ -88,6 +88,27 @@ func updateMinifyr(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(minifyr)
 }
 
+func deleteMinifyr(c *fiber.Ctx) error {
+	id, err := strconv.ParseUint(c.Params("id"), 10, 64)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			"message": "Error parsing JSON " + err.Error(),
+		})
+	}
+
+	err = model.DeleteMinifyr(id)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			"message": "Deleting Minifyr in database failed " + err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map {
+		"message": "Minifyr deleted",
+	})
+}
+
 func SetupServerListener() {
 
 	router := fiber.New()
@@ -101,6 +122,7 @@ func SetupServerListener() {
 	router.Get("/minifyr/:id", getMinifyr)
 	router.Post("/minifyr", createMinifyr)
 	router.Patch("/minifyr", updateMinifyr)
+	router.Delete("/minifyr/:id", deleteMinifyr)
 
 	router.Listen(":3000")
 }
