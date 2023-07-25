@@ -1,11 +1,13 @@
 <script>
     import Card from "./Card.svelte"
+
+    export let minifyr
 </script>
 
 <Card>
-    <p>Minifyr: http://localhost:3000/r/ {"Test"}</p>
-    <p>Redirect: {"Redirect test"}</p>
-    <p>Clicked: </p>
+    <p>Minifyr: http://localhost:3000/r/ {minifyr.minifyr}</p>
+    <p>Redirect: {minifyr.redirect}</p>
+    <p>Clicked: {minifyr.clicked}</p>
     <button class="update">Update</button>
     <button class="delete">Delete</button>
 </Card>
