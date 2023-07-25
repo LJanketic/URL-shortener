@@ -10,5 +10,5 @@
 </script>
 
 {#each minifyrs as minifyr}
-    <Item />
+    <Item minifyr={minifyr} />
 {/each}
