@@ -1,7 +1,18 @@
 <script>
     import Card from "./Card.svelte"
+    import { Modals, closeModal, openModal } from "svelte-modals"
 
     export let minifyr
+
+    async function updateMinifyr(data) {
+        const minifyrJson = {
+            redirect: data.redirect,
+            minifyr: data.minifyr,
+            random: data.random,
+            id: data.id
+        }
+    }
+
 </script>
 
 <Card>
