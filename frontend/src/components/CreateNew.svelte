@@ -3,12 +3,12 @@
     import Modal from "./Modal.svelte";
 
     async function createMinifyr(data) {
-        minifyrJson = {
+        const minifyrJson = {
             redirect: data.redirect,
             minifyr: data.minifyr,
             random: data.random
         }
-        await fetch("http://localhost:3000/redirect", {
+        await fetch("http://localhost:3000/minifyr", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(minifyrJson)
@@ -26,5 +26,17 @@
             random: false
         })
     }
-
 </script>
+
+<button on:click={handleOpenModal}>Add New</button>
+
+<style>
+    button {
+        background-color: green;
+        color: white;
+        font-weight: bold;
+        border: none;
+        padding: .75rem;
+        border-radius: 4px;
+    }
+</style>
