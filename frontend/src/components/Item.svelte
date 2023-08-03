@@ -16,7 +16,7 @@
         await fetch("gttp://localhost:3000/redirect", {
             method: "PATCH",
             headers: {"Content-type": "application/json"},
-            body: JSON.stringify(json)
+            body: JSON.stringify(minifyrJson)
         }).then(res => {
             displayCard = false
             console.log(res)
@@ -46,7 +46,7 @@
 </script>
 {#if displayCard}
 <Card>
-    <p>Minifyr: http://localhost:3000/r/ {minifyr.minifyr}</p>
+    <p>Minifyr: http://localhost:3000/r/{minifyr.minifyr}</p>
     <p>Redirect: {minifyr.redirect}</p>
     <p>Clicked: {minifyr.clicked}</p>
     <button class="update" on:click={handleOpenModal(minifyr)}>Update</button>
