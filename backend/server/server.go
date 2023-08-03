@@ -119,6 +119,7 @@ func redirectViaMinifyr(c *fiber.Ctx) error {
 	}
 
 	minifyr.Clicked += 1
+	err = model.UpdateMinifyr(minifyr)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
 			"message": utils.CLKD_ERR + err.Error(),
